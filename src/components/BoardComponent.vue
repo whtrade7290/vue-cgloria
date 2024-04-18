@@ -1,4 +1,15 @@
-<script setup>
+<template>
+  <BaseLayout
+    :title="title"
+    :breadcrumb="[{ label: label, route: '/' }, { label: title }]"
+  >
+    <View :title="title" :postList="postList" :name="name" id="Sermon_view">
+      <PaginationSimple />
+    </View>
+  </BaseLayout>
+</template>
+
+<script>
 import { onMounted } from "vue";
 
 // Sections components
@@ -11,29 +22,42 @@ import PaginationSimple from "@/layouts/sections/navigation/pagination/component
 //nav-pills
 import setNavPills from "@/assets/js/nav-pills";
 
-defineProps({
-  title: {
-    type: String,
-    default: "설교",
+export default {
+  props: {
+    title: {
+      type: String,
+      default: "설교",
+    },
+    label: {
+      type: String,
+      default: "말씀/속회",
+    },
+    postList: {
+      type: Array,
+      default: null,
+    },
+    name: {
+      type: String,
+      default: "",
+    },
   },
-  label: {
-    type: String,
-    default: "말씀/속회",
+  data() {
+    return {
+      sermonList: [],
+    };
   },
-});
-
-//hook
-onMounted(() => {
-  setNavPills();
-});
+  setup(props) {
+    console.log(props.name);
+    //hook
+    onMounted(() => {
+      setNavPills();
+    });
+  },
+  components: {
+    BaseLayout,
+    // eslint-disable-next-line vue/no-reserved-component-names
+    View,
+    PaginationSimple,
+  },
+};
 </script>
-<template>
-  <BaseLayout
-    :title="title"
-    :breadcrumb="[{ label: label, route: '/' }, { label: title }]"
-  >
-    <View title="title" id="Sermon_view">
-      <PaginationSimple />
-    </View>
-  </BaseLayout>
-</template>

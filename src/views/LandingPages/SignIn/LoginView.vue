@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted } from "vue";
+import { onMounted, ref } from "vue";
 
 // example components
 import DefaultNavbar from "@/examples/navbars/NavbarDefault.vue";
@@ -12,6 +12,10 @@ import MaterialButton from "@/components/MaterialButton.vue";
 
 // material-input
 import setMaterialInput from "@/assets/js/material-input";
+const username = ref("");
+
+console.log("log ", username);
+
 onMounted(() => {
   setMaterialInput();
 });
@@ -52,7 +56,10 @@ onMounted(() => {
                     class="input-group-outline my-3"
                     :label="{ text: '아이디', class: 'form-label' }"
                     type="email"
+                    v-model="username"
+                    :updateVal="username"
                   />
+                  {{ username }}
                   <MaterialInput
                     id="password"
                     class="input-group-outline mb-3"

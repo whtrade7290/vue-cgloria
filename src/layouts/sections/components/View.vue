@@ -1,25 +1,3 @@
-<script setup>
-// prop
-defineProps({
-  id: {
-    type: String,
-    required: true,
-  },
-  code: {
-    type: String,
-    required: true,
-  },
-  title: {
-    type: String,
-    required: true,
-  },
-  height: {
-    type: String,
-    default: "",
-  },
-});
-</script>
-
 <template>
   <div
     class="position-relative border-radius-xl overflow-hidden shadow-lg mb-7"
@@ -35,28 +13,13 @@ defineProps({
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <th>1</th>
-          <td>첫 번째 포스트</td>
-          <td>John Doe</td>
-          <td>2024-04-15</td>
-          <td>100</td>
+        <tr v-for="(post, index) in sermonList" :key="index">
+          <th>{{ post.id }}</th>
+          <td>{{ post.title }}</td>
+          <td>{{ post.writer }}</td>
+          <td>{{ post.date }}</td>
+          <td>{{ post.hit }}</td>
         </tr>
-        <tr>
-          <th scope="row">2</th>
-          <td>두 번째 포스트</td>
-          <td>Jane Smith</td>
-          <td>2024-04-14</td>
-          <td>150</td>
-        </tr>
-        <tr>
-          <th scope="row">3</th>
-          <td>세 번째 포스트</td>
-          <td>Alice Johnson</td>
-          <td>2024-04-13</td>
-          <td>120</td>
-        </tr>
-        <!-- 원하는 만큼 행을 추가할 수 있습니다 -->
       </tbody>
     </table>
 
@@ -69,24 +32,128 @@ defineProps({
     </div>
   </div>
 </template>
-<style>
+
+<script>
+export default {
+  props: {
+    id: {
+      type: String,
+      required: true,
+    },
+    code: {
+      type: String,
+      required: false,
+    },
+    title: {
+      type: String,
+      required: true,
+    },
+    height: {
+      type: String,
+      default: "",
+    },
+    name: {
+      type: String,
+      default: "",
+    },
+  },
+  data() {
+    return {
+      sermonList: [],
+    };
+  },
+  async created() {
+    await this.getSermonList();
+    // this.sermonList = this.$props.postList;
+    // console.log("this.sermonList: ", this.sermonList);
+  },
+  methods: {
+    async getSermonList() {
+      if (this.$props.name === "sermonView") {
+        try {
+          const response = await fetch("http://localhost:8080/sermonView");
+          const data = await response.json();
+          this.sermonList = data.map((d) => ({
+            id: d.id,
+            title: d.sm_title,
+            writer: d.sm_writer,
+            date: d.sm_date,
+            hit: d.sm_hit,
+          }));
+          console.log("Sermon List:", this.sermonList);
+        } catch (error) {
+          console.error("Error fetching sermon list:", error);
+        }
+      } else if (this.$props.name === "columnView") {
+        try {
+          const response = await fetch("http://localhost:8080/columnView");
+          const data = await response.json();
+          this.sermonList = data.map((d) => ({
+            id: d.id,
+            title: d.cm_title,
+            writer: d.cm_writer,
+            date: d.cm_date,
+            hit: d.cm_hit,
+          }));
+          console.log("Sermon List:", this.sermonList);
+        } catch (error) {
+          console.error("Error fetching sermon list:", error);
+        }
+      } else if (this.$props.name === "weeksScriptView") {
+        try {
+          const response = await fetch("http://localhost:8080/weeksScriptView");
+          const data = await response.json();
+          this.sermonList = data.map((d) => ({
+            id: d.id,
+            title: d.ws_title,
+            writer: d.ws_writer,
+            date: d.ws_date,
+            hit: d.ws_hit,
+          }));
+          console.log("Sermon List:", this.sermonList);
+        } catch (error) {
+          console.error("Error fetching sermon list:", error);
+        }
+      } else if (this.$props.name === "classView") {
+        try {
+          const response = await fetch("http://localhost:8080/classView");
+          const data = await response.json();
+          this.sermonList = data.map((d) => ({
+            id: d.id,
+            title: d.ct_title,
+            writer: d.ct_writer,
+            date: d.ct_date,
+            hit: d.ct_hit,
+          }));
+          console.log("Sermon List:", this.sermonList);
+        } catch (error) {
+          console.error("Error fetching sermon list:", error);
+        }
+      }
+    },
+    // },
+  },
+};
+</script>
+
+<style scoped>
 .my-editor {
-  /* we dont use `language-` classes anymore so thats why we need to add background and text color manually */
   color: black;
-  /* you must provide font-family font-size line-height. Example: */
   font-family: Consolas, Fira Mono, Menlo, Courier, monospace;
   font-size: 1em;
   line-height: 1.5;
   padding: 5px;
   tab-size: 4;
 }
-/* optional class for removing the outline */
+
 .prism-editor__textarea:focus {
   outline: none;
 }
+
 li {
   list-style: none;
 }
+
 .table th,
 .table td {
   text-align: center;

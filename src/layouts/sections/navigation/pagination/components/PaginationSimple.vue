@@ -10,8 +10,8 @@ import MaterialPaginationItem from "@/components/MaterialPaginationItem.vue";
         <div class="col-lg-4 mx-auto">
           <MaterialPagination :style="{ marginLeft: '80px' }">
             <MaterialPaginationItem prev />
-            <MaterialPaginationItem label="1" />
-            <MaterialPaginationItem label="2" active />
+            <MaterialPaginationItem label="1" active />
+            <MaterialPaginationItem label="2" />
             <MaterialPaginationItem label="3" />
             <MaterialPaginationItem label="4" />
             <MaterialPaginationItem label="5" />

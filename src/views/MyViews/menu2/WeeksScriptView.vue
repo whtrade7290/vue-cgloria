@@ -1,6 +1,10 @@
 <template>
   <div>
-    <BoardComponent :title="title" :label="label"></BoardComponent>
+    <BoardComponent
+      :title="title"
+      :label="label"
+      :name="this.$route.name"
+    ></BoardComponent>
   </div>
 </template>
 

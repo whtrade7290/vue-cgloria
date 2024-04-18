@@ -474,7 +474,7 @@ import logo from "@/assets/img/logo.png";
                 :class="getTextColor()"
                 >article</i
               >
-              예배/훈련
+              훈련센터
               <img
                 :src="getArrowColor()"
                 alt="down-arrow"
@@ -493,70 +493,89 @@ import logo from "@/assets/img/logo.png";
               <div class="d-none d-lg-block">
                 <ul class="list-group">
                   <li class="nav-item list-group-item border-0 p-0">
-                    <a
+                    <router-link
                       class="dropdown-item py-2 ps-3 border-radius-md"
-                      href=" https://www.creative-tim.com/learning-lab/vue/overview/material-kit/"
+                      v-bind:to="`/pages/${1}`"
                     >
                       <h6
                         class="dropdown-header text-dark font-weight-bolder d-flex justify-content-cente align-items-center p-0"
                       >
-                        예배/훈련시간
+                        제자훈련
                       </h6>
                       <span class="text-sm"
                         >All about overview, quick start, license and
                         contents</span
                       >
-                    </a>
+                    </router-link>
                   </li>
+
                   <li class="nav-item list-group-item border-0 p-0">
-                    <a
+                    <router-link
                       class="dropdown-item py-2 ps-3 border-radius-md"
-                      href=" https://www.creative-tim.com/learning-lab/vue/colors/material-kit/"
+                      v-bind:to="`/pages/${2}`"
                     >
                       <h6
                         class="dropdown-header text-dark font-weight-bolder d-flex justify-content-cente align-items-center p-0"
                       >
-                        주목자예배
-                      </h6>
-                      <span class="text-sm"
-                        >See our colors, icons and typography</span
-                      >
-                    </a>
-                  </li>
-                  <li class="nav-item list-group-item border-0 p-0">
-                    <a
-                      class="dropdown-item py-2 ps-3 border-radius-md"
-                      href=" https://www.creative-tim.com/learning-lab/vue/alerts/material-kit/"
-                    >
-                      <h6
-                        class="dropdown-header text-dark font-weight-bolder d-flex justify-content-cente align-items-center p-0"
-                      >
-                        훈련
+                        사역훈련
                       </h6>
                       <span class="text-sm"
                         >Explore our collection of fully designed
                         components</span
                       >
-                    </a>
+                    </router-link>
+                  </li>
+                  <li class="nav-item list-group-item border-0 p-0">
+                    <router-link
+                      class="dropdown-item py-2 ps-3 border-radius-md"
+                      v-bind:to="`/pages/${3}`"
+                    >
+                      <h6
+                        class="dropdown-header text-dark font-weight-bolder d-flex justify-content-cente align-items-center p-0"
+                      >
+                        예수님의 사람
+                      </h6>
+                      <span class="text-sm"
+                        >Explore our collection of fully designed
+                        components</span
+                      >
+                    </router-link>
+                  </li>
+                  <li class="nav-item list-group-item border-0 p-0">
+                    <router-link
+                      class="dropdown-item py-2 ps-3 border-radius-md"
+                      v-bind:to="`/pages/${4}`"
+                    >
+                      <h6
+                        class="dropdown-header text-dark font-weight-bolder d-flex justify-content-cente align-items-center p-0"
+                      >
+                        영성일기
+                      </h6>
+                      <span class="text-sm"
+                        >Explore our collection of fully designed
+                        components</span
+                      >
+                    </router-link>
                   </li>
                 </ul>
               </div>
               <div class="row d-lg-none">
                 <div class="col-md-12 g-0">
-                  <a
+                  <router-link
                     class="dropdown-item py-2 ps-3 border-radius-md"
-                    href="./pages/about-us.html"
+                    to="/pages/landing-pages/author"
                   >
                     <h6
                       class="dropdown-header text-dark font-weight-bolder d-flex justify-content-cente align-items-center p-0"
                     >
-                      예배/훈련시간
+                      제자훈련
                     </h6>
                     <span class="text-sm"
                       >All about overview, quick start, license and
                       contents</span
                     >
-                  </a>
+                  </router-link>
+
                   <a
                     class="dropdown-item py-2 ps-3 border-radius-md"
                     href="./pages/about-us.html"
@@ -564,10 +583,10 @@ import logo from "@/assets/img/logo.png";
                     <h6
                       class="dropdown-header text-dark font-weight-bolder d-flex justify-content-cente align-items-center p-0"
                     >
-                      주목자예배
+                      사역훈련
                     </h6>
                     <span class="text-sm"
-                      >See our colors, icons and typography</span
+                      >Explore our collection of fully designed components</span
                     >
                   </a>
                   <a
@@ -577,7 +596,20 @@ import logo from "@/assets/img/logo.png";
                     <h6
                       class="dropdown-header text-dark font-weight-bolder d-flex justify-content-cente align-items-center p-0"
                     >
-                      훈련
+                      예수님의 사람
+                    </h6>
+                    <span class="text-sm"
+                      >Explore our collection of fully designed components</span
+                    >
+                  </a>
+                  <a
+                    class="dropdown-item py-2 ps-3 border-radius-md"
+                    href="./pages/about-us.html"
+                  >
+                    <h6
+                      class="dropdown-header text-dark font-weight-bolder d-flex justify-content-cente align-items-center p-0"
+                    >
+                      영성일기
                     </h6>
                     <span class="text-sm"
                       >Explore our collection of fully designed components</span
@@ -666,6 +698,21 @@ import logo from "@/assets/img/logo.png";
                       >
                     </a>
                   </li>
+                  <li class="nav-item list-group-item border-0 p-0">
+                    <a
+                      class="dropdown-item py-2 ps-3 border-radius-md"
+                      href=" https://www.creative-tim.com/learning-lab/vue/colors/material-kit/"
+                    >
+                      <h6
+                        class="dropdown-header text-dark font-weight-bolder d-flex justify-content-cente align-items-center p-0"
+                      >
+                        주목자예배
+                      </h6>
+                      <span class="text-sm"
+                        >See our colors, icons and typography</span
+                      >
+                    </a>
+                  </li>
                 </ul>
               </div>
               <div class="row d-lg-none">
@@ -708,6 +755,19 @@ import logo from "@/assets/img/logo.png";
                     </h6>
                     <span class="text-sm"
                       >Explore our collection of fully designed components</span
+                    >
+                  </a>
+                  <a
+                    class="dropdown-item py-2 ps-3 border-radius-md"
+                    href="./pages/about-us.html"
+                  >
+                    <h6
+                      class="dropdown-header text-dark font-weight-bolder d-flex justify-content-cente align-items-center p-0"
+                    >
+                      주목자예배
+                    </h6>
+                    <span class="text-sm"
+                      >See our colors, icons and typography</span
                     >
                   </a>
                 </div>

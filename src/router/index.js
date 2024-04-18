@@ -55,7 +55,7 @@ const router = createRouter({
     //   component: ContactView,
     // },
     {
-      path: "/pages/landing-pages/author",
+      path: "/pages/:postId",
       name: "author",
       component: AuthorView,
     },

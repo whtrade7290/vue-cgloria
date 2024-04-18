@@ -1,5 +1,5 @@
 <script setup>
-defineProps({
+const props = defineProps({
   id: {
     type: String,
     default: "",
@@ -52,7 +52,16 @@ defineProps({
     type: String,
     default: "",
   },
+  updateVal: {
+    type: String,
+    default: "",
+  },
 });
+
+function test() {
+  console.log("props: ", props.updateVal);
+}
+
 function getClasses(size, success, error) {
   let sizeValue, isValidValue;
 
@@ -86,6 +95,7 @@ function getClasses(size, success, error) {
       :placeholder="placeholder"
       :isRequired="isRequired"
       :disabled="isDisabled"
+      @keydown="test"
     />
   </div>
 </template>

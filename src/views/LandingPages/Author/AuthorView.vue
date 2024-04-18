@@ -1,16 +1,19 @@
 <script setup>
+import { useRoute } from "vue-router";
+
 // example components
 import DefaultNavbar from "../../../examples/navbars/NavbarDefault.vue";
 import Header from "../../../examples/Header.vue";
 
 // sections
-import Footer from "./Sections/AuthorFooter.vue";
-import Profile from "./Sections/AuthorProfile.vue";
+import DefaultFooter from "../../../examples/footers/FooterDefault.vue";
 import Posts from "./Sections/AuthorPosts.vue";
-import Contact from "./Sections/AuthorContact.vue";
 
 // image
-import image from "@/assets/img/city-profile.jpg";
+import image from "@/assets/img/disciple.jpeg";
+
+const route = useRoute();
+// console.log(, );
 </script>
 <template>
   <DefaultNavbar transparent />
@@ -24,9 +27,10 @@ import image from "@/assets/img/city-profile.jpg";
     </div>
   </Header>
   <div class="card card-body blur shadow-blur mx-3 mx-md-4 mt-n6 mb-4">
-    <Profile />
-    <Posts />
+    <!-- <Profile /> -->
+    <Posts :num="route.params.postId" />
   </div>
-  <Contact />
-  <Footer />
+  <!-- 지도 커스텀하기 -->
+  <!-- <Contact /> -->
+  <DefaultFooter />
 </template>
