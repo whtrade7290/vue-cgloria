@@ -4,7 +4,7 @@ import introView from "@/views/MyViews/menu1/introView.vue";
 import pastorIntro from "@/views/MyViews/menu1/PastorIntro.vue";
 import AboutView from "../views/LandingPages/AboutUs/AboutView.vue";
 // import ContactView from "../views/LandingPages/ContactUs/ContactView.vue";
-import AuthorView from "../views/LandingPages/Author/AuthorView.vue";
+import TrainingView from "@/views/MyViews/menu3/TrainingView.vue";
 import LoginView from "../views/LandingPages/SignIn/LoginView.vue";
 import PageHeaders from "../layouts/sections/page-sections/page-headers/HeadersView.vue";
 import PageFeatures from "../layouts/sections/page-sections/features/FeaturesView.vue";
@@ -26,6 +26,10 @@ import ElDropdowns from "../layouts/sections/elements/dropdowns/DropdownsView.vu
 import ElProgressBars from "../layouts/sections/elements/progress-bars/ProgressBarsView.vue";
 import ElToggles from "../layouts/sections/elements/toggles/TogglesView.vue";
 import ElTypography from "../layouts/sections/elements/typography/TypographyView.vue";
+import NoticeView from "@/views/MyViews/menu3/boards/NoticeView.vue";
+import DiaryView from "@/views/MyViews/menu3/boards/DiaryView.vue";
+import HomeworkView from "@/views/MyViews/menu3/boards/HomeworkView.vue";
+import GalleryView from "@/views/MyViews/menu3/boards/GalleryView.vue";
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -33,6 +37,10 @@ const router = createRouter({
       path: "/",
       name: "presentation",
       component: MainView,
+    },
+    {
+      path: "/home/redirect",
+      redirect: "/menu1/introView",
     },
     {
       path: "/menu1/introView",
@@ -55,9 +63,9 @@ const router = createRouter({
     //   component: ContactView,
     // },
     {
-      path: "/pages/:postId",
-      name: "author",
-      component: AuthorView,
+      path: "/training",
+      name: "training",
+      component: TrainingView,
     },
     {
       path: "/pages/landing-pages/login",
@@ -163,6 +171,26 @@ const router = createRouter({
       path: "/sections/elements/typography",
       name: "el-typography",
       component: ElTypography,
+    },
+    {
+      path: "/training/notice",
+      name: "notice",
+      component: NoticeView,
+    },
+    {
+      path: "/training/diary",
+      name: "diary",
+      component: DiaryView,
+    },
+    {
+      path: "/training/homework",
+      name: "homework",
+      component: HomeworkView,
+    },
+    {
+      path: "/training/gallery",
+      name: "gallery",
+      component: GalleryView,
     },
   ],
 });

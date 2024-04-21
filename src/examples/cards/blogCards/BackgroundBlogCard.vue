@@ -1,5 +1,7 @@
 <script setup>
-defineProps({
+import router from "../../../router";
+
+const props = defineProps({
   image: {
     type: String,
     required: true,
@@ -23,7 +25,15 @@ defineProps({
       color: "white",
     }),
   },
+  board: {
+    type: String,
+    default: "test",
+  },
 });
+
+const moveTo = () => {
+  router.push({ path: `/training/${props.board}` });
+};
 </script>
 <template>
   <div class="card card-blog card-background cursor-pointer">
@@ -42,7 +52,8 @@ defineProps({
           href="javascript:;"
           class="text-sm icon-move-right"
           :class="`text-${action.color}`"
-          >{{ action.label }}
+          @click="moveTo"
+          >게시판 접속
           <i class="fas fa-arrow-right text-xs ms-1"></i>
         </a>
       </div>

@@ -26,11 +26,11 @@ export default {
   props: {
     title: {
       type: String,
-      default: "설교",
+      default: "",
     },
     label: {
       type: String,
-      default: "말씀/속회",
+      default: "",
     },
     postList: {
       type: Array,
@@ -46,8 +46,7 @@ export default {
       sermonList: [],
     };
   },
-  setup(props) {
-    console.log(props.name);
+  setup() {
     //hook
     onMounted(() => {
       setNavPills();

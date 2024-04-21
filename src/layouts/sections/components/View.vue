@@ -1,3 +1,38 @@
+<script setup>
+import { onMounted, ref } from "vue";
+import "prismjs/themes/prism.css"; // import the styles somewhere
+import "vue-prism-editor/dist/prismeditor.min.css";
+// store
+import { useAppStore } from "@/stores";
+
+const store = useAppStore();
+const posts = ref();
+
+onMounted(async () => {
+  await store.fetchBoardList(props.name);
+  posts.value = store.dataList;
+});
+
+const props = defineProps({
+  id: {
+    type: String,
+    required: true,
+  },
+  title: {
+    type: String,
+    required: true,
+  },
+  height: {
+    type: String,
+    default: "",
+  },
+  name: {
+    type: String,
+    required: true,
+  },
+});
+</script>
+
 <template>
   <div
     class="position-relative border-radius-xl overflow-hidden shadow-lg mb-7"
@@ -13,7 +48,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(post, index) in sermonList" :key="index">
+        <tr v-for="(post, index) in posts" :key="index">
           <th>{{ post.id }}</th>
           <td>{{ post.title }}</td>
           <td>{{ post.writer }}</td>
@@ -33,112 +68,11 @@
   </div>
 </template>
 
-<script>
-export default {
-  props: {
-    id: {
-      type: String,
-      required: true,
-    },
-    code: {
-      type: String,
-      required: false,
-    },
-    title: {
-      type: String,
-      required: true,
-    },
-    height: {
-      type: String,
-      default: "",
-    },
-    name: {
-      type: String,
-      default: "",
-    },
-  },
-  data() {
-    return {
-      sermonList: [],
-    };
-  },
-  async created() {
-    await this.getSermonList();
-    // this.sermonList = this.$props.postList;
-    // console.log("this.sermonList: ", this.sermonList);
-  },
-  methods: {
-    async getSermonList() {
-      if (this.$props.name === "sermonView") {
-        try {
-          const response = await fetch("http://localhost:8080/sermonView");
-          const data = await response.json();
-          this.sermonList = data.map((d) => ({
-            id: d.id,
-            title: d.sm_title,
-            writer: d.sm_writer,
-            date: d.sm_date,
-            hit: d.sm_hit,
-          }));
-          console.log("Sermon List:", this.sermonList);
-        } catch (error) {
-          console.error("Error fetching sermon list:", error);
-        }
-      } else if (this.$props.name === "columnView") {
-        try {
-          const response = await fetch("http://localhost:8080/columnView");
-          const data = await response.json();
-          this.sermonList = data.map((d) => ({
-            id: d.id,
-            title: d.cm_title,
-            writer: d.cm_writer,
-            date: d.cm_date,
-            hit: d.cm_hit,
-          }));
-          console.log("Sermon List:", this.sermonList);
-        } catch (error) {
-          console.error("Error fetching sermon list:", error);
-        }
-      } else if (this.$props.name === "weeksScriptView") {
-        try {
-          const response = await fetch("http://localhost:8080/weeksScriptView");
-          const data = await response.json();
-          this.sermonList = data.map((d) => ({
-            id: d.id,
-            title: d.ws_title,
-            writer: d.ws_writer,
-            date: d.ws_date,
-            hit: d.ws_hit,
-          }));
-          console.log("Sermon List:", this.sermonList);
-        } catch (error) {
-          console.error("Error fetching sermon list:", error);
-        }
-      } else if (this.$props.name === "classView") {
-        try {
-          const response = await fetch("http://localhost:8080/classView");
-          const data = await response.json();
-          this.sermonList = data.map((d) => ({
-            id: d.id,
-            title: d.ct_title,
-            writer: d.ct_writer,
-            date: d.ct_date,
-            hit: d.ct_hit,
-          }));
-          console.log("Sermon List:", this.sermonList);
-        } catch (error) {
-          console.error("Error fetching sermon list:", error);
-        }
-      }
-    },
-    // },
-  },
-};
-</script>
-
-<style scoped>
+<style>
 .my-editor {
+  /* we dont use `language-` classes anymore so thats why we need to add background and text color manually */
   color: black;
+  /* you must provide font-family font-size line-height. Example: */
   font-family: Consolas, Fira Mono, Menlo, Courier, monospace;
   font-size: 1em;
   line-height: 1.5;
@@ -146,12 +80,9 @@ export default {
   tab-size: 4;
 }
 
+/* optional class for removing the outline */
 .prism-editor__textarea:focus {
   outline: none;
-}
-
-li {
-  list-style: none;
 }
 
 .table th,

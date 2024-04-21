@@ -1,6 +1,6 @@
 <script setup>
 import { RouterLink } from "vue-router";
-import { ref, watch } from "vue";
+import { ref, watch, computed } from "vue";
 import { useWindowsWidth } from "../../assets/js/useWindowsWidth";
 
 // images
@@ -66,10 +66,19 @@ const getTextColor = () => {
   return color;
 };
 
-// set nav color on mobile && desktop
+// set nav color on mobile&& desktop
 
 let textDark = ref(props.darkText);
 const { type } = useWindowsWidth();
+
+const removeSession = () => {
+  sessionStorage.removeItem(1);
+  router.replace("/");
+};
+
+const checkSession = computed(() => {
+  return !sessionStorage.getItem(1);
+});
 
 if (type.value === "mobile") {
   textDark.value = true;
@@ -90,6 +99,7 @@ watch(
 
 // @img
 import logo from "@/assets/img/logo.png";
+import router from "../../router";
 </script>
 <template>
   <nav
@@ -495,7 +505,7 @@ import logo from "@/assets/img/logo.png";
                   <li class="nav-item list-group-item border-0 p-0">
                     <router-link
                       class="dropdown-item py-2 ps-3 border-radius-md"
-                      v-bind:to="`/pages/${1}`"
+                      to="/training"
                     >
                       <h6
                         class="dropdown-header text-dark font-weight-bolder d-flex justify-content-cente align-items-center p-0"
@@ -512,7 +522,7 @@ import logo from "@/assets/img/logo.png";
                   <li class="nav-item list-group-item border-0 p-0">
                     <router-link
                       class="dropdown-item py-2 ps-3 border-radius-md"
-                      v-bind:to="`/pages/${2}`"
+                      to="/training"
                     >
                       <h6
                         class="dropdown-header text-dark font-weight-bolder d-flex justify-content-cente align-items-center p-0"
@@ -528,7 +538,7 @@ import logo from "@/assets/img/logo.png";
                   <li class="nav-item list-group-item border-0 p-0">
                     <router-link
                       class="dropdown-item py-2 ps-3 border-radius-md"
-                      v-bind:to="`/pages/${3}`"
+                      to="/training"
                     >
                       <h6
                         class="dropdown-header text-dark font-weight-bolder d-flex justify-content-cente align-items-center p-0"
@@ -544,7 +554,7 @@ import logo from "@/assets/img/logo.png";
                   <li class="nav-item list-group-item border-0 p-0">
                     <router-link
                       class="dropdown-item py-2 ps-3 border-radius-md"
-                      v-bind:to="`/pages/${4}`"
+                      to="/training"
                     >
                       <h6
                         class="dropdown-header text-dark font-weight-bolder d-flex justify-content-cente align-items-center p-0"
@@ -563,7 +573,7 @@ import logo from "@/assets/img/logo.png";
                 <div class="col-md-12 g-0">
                   <router-link
                     class="dropdown-item py-2 ps-3 border-radius-md"
-                    to="/pages/landing-pages/author"
+                    to="/training"
                   >
                     <h6
                       class="dropdown-header text-dark font-weight-bolder d-flex justify-content-cente align-items-center p-0"
@@ -576,9 +586,9 @@ import logo from "@/assets/img/logo.png";
                     >
                   </router-link>
 
-                  <a
+                  <router-link
                     class="dropdown-item py-2 ps-3 border-radius-md"
-                    href="./pages/about-us.html"
+                    to="/training"
                   >
                     <h6
                       class="dropdown-header text-dark font-weight-bolder d-flex justify-content-cente align-items-center p-0"
@@ -588,10 +598,10 @@ import logo from "@/assets/img/logo.png";
                     <span class="text-sm"
                       >Explore our collection of fully designed components</span
                     >
-                  </a>
-                  <a
+                  </router-link>
+                  <router-link
                     class="dropdown-item py-2 ps-3 border-radius-md"
-                    href="./pages/about-us.html"
+                    to="/training"
                   >
                     <h6
                       class="dropdown-header text-dark font-weight-bolder d-flex justify-content-cente align-items-center p-0"
@@ -601,10 +611,10 @@ import logo from "@/assets/img/logo.png";
                     <span class="text-sm"
                       >Explore our collection of fully designed components</span
                     >
-                  </a>
-                  <a
+                  </router-link>
+                  <router-link
                     class="dropdown-item py-2 ps-3 border-radius-md"
-                    href="./pages/about-us.html"
+                    to="/training"
                   >
                     <h6
                       class="dropdown-header text-dark font-weight-bolder d-flex justify-content-cente align-items-center p-0"
@@ -614,7 +624,7 @@ import logo from "@/assets/img/logo.png";
                     <span class="text-sm"
                       >Explore our collection of fully designed components</span
                     >
-                  </a>
+                  </router-link>
                 </div>
               </div>
             </div>
@@ -1071,19 +1081,36 @@ import logo from "@/assets/img/logo.png";
             </div>
           </li>
           <li class="nav-item dropdown dropdown-hover mx-2">
-            <router-link
-              role="button"
-              class="nav-link ps-2 d-flex cursor-pointer align-items-center"
-              :class="getTextColor()"
-              to="/pages/landing-pages/login"
-            >
-              <i
-                class="material-icons opacity-6 me-2 text-md"
+            <template v-if="checkSession">
+              <router-link
+                role="button"
+                class="nav-link ps-2 d-flex cursor-pointer align-items-center"
                 :class="getTextColor()"
-                >person</i
+                to="/pages/landing-pages/login"
               >
-              로그인
-            </router-link>
+                <i
+                  class="material-icons opacity-6 me-2 text-md"
+                  :class="getTextColor()"
+                  >person</i
+                >
+                로그인
+              </router-link>
+            </template>
+            <template v-else>
+              <a
+                role="button"
+                class="nav-link ps-2 d-flex cursor-pointer align-items-center"
+                :class="getTextColor()"
+                @click="removeSession"
+              >
+                <i
+                  class="material-icons opacity-6 me-2 text-md"
+                  :class="getTextColor()"
+                  >person</i
+                >
+                로그아웃
+              </a>
+            </template>
           </li>
         </ul>
       </div>

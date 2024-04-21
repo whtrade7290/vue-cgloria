@@ -1,25 +1,3 @@
-<script setup>
-import { onMounted, ref } from "vue";
-
-// example components
-import DefaultNavbar from "@/examples/navbars/NavbarDefault.vue";
-import Header from "@/examples/Header.vue";
-
-//Vue Material Kit 2 components
-import MaterialInput from "@/components/MaterialInput.vue";
-import MaterialSwitch from "@/components/MaterialSwitch.vue";
-import MaterialButton from "@/components/MaterialButton.vue";
-
-// material-input
-import setMaterialInput from "@/assets/js/material-input";
-const username = ref("");
-
-console.log("log ", username);
-
-onMounted(() => {
-  setMaterialInput();
-});
-</script>
 <template>
   <DefaultNavbar transparent />
   <Header>
@@ -56,22 +34,32 @@ onMounted(() => {
                     class="input-group-outline my-3"
                     :label="{ text: '아이디', class: 'form-label' }"
                     type="email"
-                    v-model="username"
-                    :updateVal="username"
+                    :value="username"
+                    v-on:update="
+                      (inputVal) => {
+                        username = inputVal;
+                      }
+                    "
                   />
-                  {{ username }}
                   <MaterialInput
                     id="password"
                     class="input-group-outline mb-3"
                     :label="{ text: '비밀번호', class: 'form-label' }"
                     type="password"
+                    :value="password"
+                    v-on:update="
+                      (inputVal) => {
+                        password = inputVal;
+                      }
+                    "
                   />
                   <MaterialSwitch
                     class="d-flex align-items-center mb-3"
                     id="rememberMe"
                     labelClass="mb-0 ms-3"
                     checked
-                    >기억하기</MaterialSwitch
+                  >
+                    기억하기</MaterialSwitch
                   >
 
                   <div class="text-center">
@@ -80,7 +68,9 @@ onMounted(() => {
                       variant="gradient"
                       color="success"
                       fullWidth
-                      >로그인</MaterialButton
+                      @click.prevent="login"
+                    >
+                      로그인</MaterialButton
                     >
                   </div>
                   <p class="mt-4 text-sm text-center">
@@ -122,3 +112,44 @@ onMounted(() => {
     </div>
   </Header>
 </template>
+
+<script setup>
+import { ref } from "vue";
+import { onMounted } from "vue";
+import router from "../../../router";
+import MaterialInput from "@/components/MaterialInput.vue";
+import MaterialSwitch from "@/components/MaterialSwitch.vue";
+import MaterialButton from "@/components/MaterialButton.vue";
+import setMaterialInput from "@/assets/js/material-input";
+import Header from "@/examples/Header.vue";
+import DefaultNavbar from "../../../examples/navbars/NavbarDefault.vue";
+import Swal from "sweetalert2";
+import { requestLogin } from "@/api/index.js";
+
+const username = ref("");
+const password = ref("");
+
+const login = async () => {
+  const res = await requestLogin(username.value, password.value);
+  const { data, status, statusText } = res;
+
+  if (status === 200 || statusText === "OK") {
+    sessionStorage.setItem(1, JSON.stringify(data[0]));
+    Swal.fire({
+      title: "로그인 되었습니다.",
+      icon: "success",
+    }).then(() => {
+      router.replace("/");
+    });
+  } else {
+    Swal.fire({
+      title: "비밀번호를 확인해주세요.",
+      icon: "error",
+    });
+  }
+};
+
+onMounted(() => {
+  setMaterialInput();
+});
+</script>
